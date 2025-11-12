@@ -4,15 +4,28 @@ security:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        users_in_memory: { memory: null }
+        # users_in_memory: { memory: null }
+        in_memory:
+            memory:
+                users:
+                    admin:
+                        password: '$2y$13$X/oZ0DjhNfT5M4rsq5uPD.N5rePDFev.H.zcN2KU2fpFhyff8euCu'
+                        roles: ['ROLE_ADMIN']
+                    user:
+                        password: '$2y$13$/hi8DbiI17T8TK9b48zPk.noruKDRuaTok.4ukggupywQpLKd3fvG'
+                        roles: ['ROLE_USER']
+
+           
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             lazy: true
-            provider: users_in_memory
-
+            provider: in_memory
+            pattern: ^/
+            http_basic: ~
+            stateless: false
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
@@ -22,12 +35,13 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/dashboard, roles: ROLE_USER }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/dashboard, roles: ROLE_ADMIN }
+        - { path: ^/userinterface, roles: ROLE_USER }
 
 when@test:
     security:
         password_hashers:
+
             # By default, password hashers are resource intensive and take time. This is
             # important to generate secure password hashes. In tests however, secure hashes
             # are not important, waste resources and increase test times. The following

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ page_title }}{% endblock %}
+{% block title %}Hello DashboardController!{% endblock %}
 
 {% block body %}
 <div class="container mt-5">
@@ -19,8 +19,7 @@
                 <div class="card-body">
                     <h4>Welcome, {{ user.username ?? 'Guest' }}!</h4>
                     <hr>
-                    <p>This is your personal dashboard. You can manage your profile, check reports, or configure settings here.</p>
-
+                    <h1>You are login as Admin, you have full access.</h1>
                     <div class="row text-center mt-4">
                         <div class="col-md-4">
                             <div class="card bg-light border-0">
